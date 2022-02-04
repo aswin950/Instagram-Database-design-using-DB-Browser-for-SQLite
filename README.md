@@ -150,6 +150,8 @@ LEFT JOIN IMAGE
 ON USERS.id = IMAGE.FK user id
 WHERE IMAGE.id IS NULL
 
+<img width="408" alt="image" src="https://user-images.githubusercontent.com/61600236/152584562-12c31eaa-f0eb-4819-b19b-d58433b5bf29.png">
+
 Although our business rules state one user can have images, it is not mandatory for a user to have images in their profile. This can be mentioned as one of the features of Instagram. Users of Instagram may continue using Instagram without uploading any images. The above select statement displays all the USERS who have not uploaded any images along with their user id. LEFT JOIN statement is used to combine the USERS table and IMAGE table and ORDER BY is used to display users in ascending order.
 
 # Instagram Architecture
