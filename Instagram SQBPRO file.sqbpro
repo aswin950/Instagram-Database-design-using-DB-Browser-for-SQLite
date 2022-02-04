@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/Aswin/Desktop/ITC6000/week 4/ITC6000-2021-Winter-B-Sec03-Aswin Kumar Rajendran-Instagram.db" readonly="0" foreign_keys="0" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="0" synchronous="1"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1821"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,8:mainCOMMENTS"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="1" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="83"/><column index="2" value="101"/><column index="3" value="300"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="COMMENTS" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="23"/><column index="2" value="108"/><column index="3" value="71"/><column index="4" value="62"/><column index="5" value="116"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="IMAGE" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="24"/><column index="2" value="300"/><column index="3" value="62"/><column index="4" value="115"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="LIKES" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="62"/><column index="2" value="71"/><column index="3" value="115"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="USERS" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="23"/><column index="2" value="105"/><column index="3" value="101"/><column index="4" value="116"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">-- select users with no images
+SELECT username
+FROM USERS
+LEFT JOIN IMAGE
+ON USERS.id = IMAGE.FK_user_id
+WHERE IMAGE.id IS NULL
+ORDER BY USERS.id;</sql><sql name="SQL 4">-- users who liked all images
+SELECT	username, 
+Count(*)	AS	num_of_likes 
+FROM	USERS 
+INNER	JOIN	LIKES 
+ON	USERS.id = LIKES.FK_user_id 
+GROUP 	BY	LIKES.FK_user_id 
+HAVING	num_of_likes = (SELECT Count(*) 
+FROM	IMAGE); </sql><sql name="SQL 5">-- most liked image with username and image_url
+SELECT 
+username,
+IMAGE.id,
+IMAGE.image_url, 
+COUNT(*) AS total
+FROM IMAGE
+INNER JOIN LIKES
+ON LIKES.FK_image_id = IMAGE.id
+INNER JOIN USERS
+ON IMAGE.FK_user_id = USERS.id
+GROUP BY IMAGE.id
+ORDER BY total DESC
+LIMIT 1;</sql><sql name="SQL 6">--average number of images per user
+SELECT (SELECT Count(*) 
+        FROM   IMAGE) / (SELECT Count(*) 
+                          FROM   USERS) AS average; </sql><sql name="SQL 9">-- display all the image url with username 'hardikpandya'
+SELECT username,image_url
+FROM USERS
+LEFT JOIN IMAGE
+ON USERS.id = IMAGE.FK_user_id
+WHERE username = 'hardikpandya'</sql><sql name="SQL 32">-- most liked image with the user who created the image
+SELECT 
+username,
+IMAGE.id,
+IMAGE.image_url, 
+COUNT(*) AS total
+FROM IMAGE
+INNER JOIN LIKES
+ON LIKES.FK_image_id = IMAGE.id
+INNER JOIN USERS
+ON IMAGE.FK_user_id = USERS.id
+GROUP BY IMAGE.id
+ORDER BY total DESC
+LIMIT 1;</sql><current_tab id="5"/></tab_sql></sqlb_project>
